@@ -61,3 +61,5 @@ If you enter any numbers then it will say to enter its correct in the form of al
 
 Case-3 "i" or "I" etc.
 If you enter capital or small letters it will assume both of them as same characters .
+
+This is the first version and we need to work on UI/UX of the game 
