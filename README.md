@@ -63,3 +63,5 @@ Case-3 "i" or "I" etc.
 If you enter capital or small letters it will assume both of them as same characters .
 
 This is the first version and we need to work on UI/UX of the game 
+
+Now we have tested the UI/UX of the game and now in the third version we are going to update the game with a set of rules and instructions

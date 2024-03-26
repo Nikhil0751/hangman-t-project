@@ -1,109 +1,111 @@
+import tkinter as tk
+from tkinter import messagebox
+import random
 
-import random 
-"""The Python random module: Your ticket to unpredictability, randomness, and delightful surprises in programming."""
+class HangmanGUI:
+    def _init_(self, master):
+        self.master = master
+        self.master.title("Hangman Game")
+        self.word_to_guess = random.choice(self.get_words()).lower()
+        self.guesses = []
+        self.MAX_TRIES = 6
+        self.create_widgets()
+        self.draw_board()
+
+    def create_widgets(self):
+        self.canvas = tk.Canvas(self.master, width=400, height=400)
+        self.canvas.grid(row=0, column=0, columnspan=3)
+
+        self.word_label = tk.Label(self.master, text="Word: ")
+        self.word_label.grid(row=1, column=0, sticky='e')
+
+        self.guess_entry = tk.Entry(self.master, width=5)
+        self.guess_entry.grid(row=1, column=1)
+
+        self.guess_button = tk.Button(self.master, text="Guess", command=self.make_guess)
+        self.guess_button.grid(row=1, column=2)
+
+        self.restart_button = tk.Button(self.master, text="Restart", command=self.restart_game)
+        self.restart_button.grid(row=2, column=1, columnspan=2)
+
+    def get_words(self):
+        return ['hangman', 'computer', 'python', 'keyboard', 'mouse', 'apple', 'banana', 'orange']
+
+    def draw_board(self):
+        self.canvas.delete("hangman")
+        if len(self.guesses) > 0:
+            for idx, pic in enumerate(Hangman.HANGMAN_PICS[:len(self.guesses)]):
+                self.canvas.create_text(200, 50 + 50 * idx, text=pic, font=("Courier", 24), tag="hangman")
+        else:
+            self.canvas.create_text(200, 200, text=Hangman.HANGMAN_PICS[0], font=("Courier", 24), tag="hangman")
+
+    def make_guess(self):
+        guess = self.guess_entry.get().lower()
+        if guess not in self.guesses:
+            self.guesses.append(guess)
+            if guess in self.word_to_guess:
+                self.update_word_label()
+                if self.check_win():
+                    messagebox.showinfo("Hangman", "You win!")
+            else:
+                self.draw_board()
+                if len(self.guesses) >= self.MAX_TRIES:
+                    messagebox.showinfo("Hangman", f"Game over! The word was {self.word_to_guess}.")
+        self.guess_entry.delete(0, 'end')
+
+    def update_word_label(self):
+        guessed_word = ''.join([letter if letter in self.guesses else '_' for letter in self.word_to_guess])
+        self.word_label.config(text="Word: " + guessed_word)
+
+    def check_win(self):
+        return all(letter in self.guesses for letter in self.word_to_guess)
+
+    def restart_game(self):
+        self.word_to_guess = random.choice(self.get_words()).lower()
+        self.guesses = []
+        self.draw_board()
+        self.update_word_label()
 
 class Hangman:
-  
     HANGMAN_PICS = ['''+---+
-            |
-            |
-            |
-           ===''', '''+---+
-        O   |
-            |
-            |
-           ===''', '''
-        +---+
-        O   |
-        |   |
-            |
-           ===''', '''
-        +---+
-        O   |
-       /|   |
-            |
-           ===''', '''
-        +---+
-        O   |
-       /|\  |
-            |
-           ===''', '''
-        +---+
-        O   |
-       /|\  |
-       /    |
-           ===''', '''
-        +---+
-        O   |
-       /|\  |
-       / \  |
-           ===''']
-    
-    WORDS = 'As dusk settled over the bustling city, the neon lights flickered to life, painting the streets in a kaleidoscope of colors. Honking cars and chatter of pedestrians filled the air, creating a symphony of urban chaos. Amidst the hustle and bustle, a lone figure sat on a bench, lost in thought. The aroma of street food wafted through the air, tempting passersby with its tantalizing scent.'.split()
+    |
+    |
+    |
+   ===''', '''+---+
+O   |
+    |
+    |
+   ===''', '''
++---+
+O   |
+|   |
+    |
+   ===''', '''
++---+
+O   |
+/|   |
+    |
+   ===''', '''
++---+
+O   |
+/|\  |
+    |
+   ===''', '''
++---+
+O   |
+/|\  |
+/   |
+   ===''', '''
++---+
+O   |
+/|\  |
+/ \  |
+   ===''']
 
-    def __init__(self):
-        self.missed_letters = ''
-        self.correct_letters = ''
-        self.secret_word = self.get_random_word()
-        self.game_is_done = False
+def main():
+    root = tk.Tk()
+    hangman_game = HangmanGUI(root)
+    root.mainloop()
 
-    def get_random_word(self):
-        return random.choice(self.WORDS)
-
-    def display_board(self):
-        print()
-        print(self.HANGMAN_PICS[len(self.missed_letters)])
-        print()
-        print('Missed letters:', self.missed_letters)
-        
-        blanks = ''
-        for letter in self.secret_word:
-            if letter in self.correct_letters:
-                blanks += letter
-            else:
-                blanks += '_'
-        print('Word:', ' '.join(blanks))
-
-    def get_guess(self):
-        while True:
-            guess = input('Please guess a letter: ').lower()
-            if len(guess) != 1:
-                print('Only a single letter is allowed.')
-            elif guess in self.missed_letters or guess in self.correct_letters:
-                print('You have already guessed that letter. Choose again.')
-            elif guess not in 'abcdefghijklmnopqrstuvwxyz':
-                print('Please enter a letter from the alphabet.')
-            else:
-                return guess
-
-    def play_again(self):
-        return input('Would you like to play again? (y)es or (n)o: ').lower().startswith('y')
-
-    def play(self):
-        print('|_H_A_N_G_M_A_N_|')
-
-        while True:
-            self.display_board()
-            guess = self.get_guess()
-
-            if guess in self.secret_word:
-                self.correct_letters += guess
-                if all(letter in self.correct_letters for letter in self.secret_word):
-                    print('You guessed it!')
-                    print('The secret word is "{}". You win!'.format(self.secret_word))
-                    break
-            else:
-                self.missed_letters += guess
-                if len(self.missed_letters) == len(self.HANGMAN_PICS) - 1:
-                    self.display_board()
-                    print('You have run out of guesses!')
-                    print('The word was "{}".'.format(self.secret_word))
-                    break
-
-        if self.play_again():
-            self.__init__()
-            self.play()
-
-if __name__ == "__main__":
-    game = Hangman()
-    game.play()
+if _name_ == "_main_":
+    main()
