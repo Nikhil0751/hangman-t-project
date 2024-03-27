@@ -16,17 +16,20 @@ class HangmanGUI:
         self.canvas = tk.Canvas(self.master, width=400, height=400)
         self.canvas.grid(row=0, column=0, columnspan=3)
 
+        self.instruction_label = tk.Label(self.master, text="Enter a letter and click 'Guess' to play.")
+        self.instruction_label.grid(row=1, column=0, columnspan=3)
+
         self.word_label = tk.Label(self.master, text="Word: ")
-        self.word_label.grid(row=1, column=0, sticky='e')
+        self.word_label.grid(row=2, column=0, sticky='e')
 
         self.guess_entry = tk.Entry(self.master, width=5)
-        self.guess_entry.grid(row=1, column=1)
+        self.guess_entry.grid(row=2, column=1)
 
         self.guess_button = tk.Button(self.master, text="Guess", command=self.make_guess)
-        self.guess_button.grid(row=1, column=2)
+        self.guess_button.grid(row=2, column=2)
 
         self.restart_button = tk.Button(self.master, text="Restart", command=self.restart_game)
-        self.restart_button.grid(row=2, column=1, columnspan=2)
+        self.restart_button.grid(row=3, column=1, columnspan=2)
 
     def get_words(self):
         return ['hangman', 'computer', 'python', 'keyboard', 'mouse', 'apple', 'banana', 'orange']
@@ -46,11 +49,11 @@ class HangmanGUI:
             if guess in self.word_to_guess:
                 self.update_word_label()
                 if self.check_win():
-                    messagebox.showinfo("Hangman", "You win!")
+                    messagebox.showinfo("Hangman", "You win! The word was '{}'.".format(self.word_to_guess))
             else:
                 self.draw_board()
                 if len(self.guesses) >= self.MAX_TRIES:
-                    messagebox.showinfo("Hangman", f"Game over! The word was {self.word_to_guess}.")
+                    messagebox.showinfo("Hangman", "Game over! The word was '{}'.".format(self.word_to_guess))
         self.guess_entry.delete(0, 'end')
 
     def update_word_label(self):

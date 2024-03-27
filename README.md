@@ -62,6 +62,8 @@ If you enter any numbers then it will say to enter its correct in the form of al
 Case-3 "i" or "I" etc.
 If you enter capital or small letters it will assume both of them as same characters .
 
-This is the first version and we need to work on UI/UX of the game 
+This is the first version and we need to work on UI/UX of the game .
 
-Now we have tested the UI/UX of the game and now in the third version we are going to update the game with a set of rules and instructions
+Now we have tested the UI/UX of the game and now in the third version we are going to update the game with a set of rules and instructions.
+
+And now comes the third version where we have implemented the set of rules and instructions and in the next version we are going for a multiplayer level version .
