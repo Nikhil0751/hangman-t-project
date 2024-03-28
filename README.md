@@ -67,3 +67,5 @@ This is the first version and we need to work on UI/UX of the game .
 Now we have tested the UI/UX of the game and now in the third version we are going to update the game with a set of rules and instructions.
 
 And now comes the third version where we have implemented the set of rules and instructions and in the next version we are going for a multiplayer level version .
+
+We have made four versions in this game and each inckudes it's one step ahead of it and all the problems are solved related ti it .
