@@ -62,7 +62,8 @@ If you enter any numbers then it will say to enter its correct in the form of al
 Case-3 "i" or "I" etc.
 If you enter capital or small letters it will assume both of them as same characters .
 
-This is the first version and we need to work on UI/UX of the game .
+In the first version we have made the simple hangman game code using python and in the upcoming version we will work on various other functionalities and we have to work on variables and identifiers that are nor declared properly and this game need to improve its version for more clarity of the users.
+
 
 Now we have tested the UI/UX of the game and now in the third version we are going to update the game with a set of rules and instructions.
 
